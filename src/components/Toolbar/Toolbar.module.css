@@ -1,0 +1,11 @@
+.Toolbar {
+  display: flex;
+  place-items: center;
+  background-color: orange;
+  height: 50px;
+}
+.Toolbar h1 {
+  color: rgb(221, 0, 0);
+  margin: 0 auto;
+  padding: 0;
+}

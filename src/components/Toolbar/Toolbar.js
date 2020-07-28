@@ -1,5 +1,10 @@
 import React from 'react';
+import classes from './Toolbar.module.css';
 
-const toolbar = (props) => <div>Toolbar</div>;
+const toolbar = (props) => (
+  <div className={classes.Toolbar}>
+    <h1>Where's Waldo</h1>
+  </div>
+);
 
 export default toolbar;

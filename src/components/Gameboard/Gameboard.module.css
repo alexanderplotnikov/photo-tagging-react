@@ -1,0 +1,10 @@
+.Gameboard {
+  display: block;
+  position: relative;
+  /* overflow-x: scroll; */
+  overflow: hidden;
+}
+.Gameboard img {
+  display: block;
+  width: 100%;
+}
