@@ -8,6 +8,17 @@ class Waldo extends Component {
     },
     characters: ['Waldo', 'Peter'],
   };
+  characters = {
+    waldo: {
+      ratioX: [66, 69],
+      ratioY: [73, 83],
+    },
+    peter: {
+      ratioX: [0, 4],
+      ratioY: [0, 7],
+    },
+  };
+
   handleTag = (e) => {
     let bounds = e.target.getBoundingClientRect();
     let x = e.clientX - bounds.left;
@@ -18,6 +29,34 @@ class Waldo extends Component {
       tag: { coordinates: [ratioX, ratioY] },
     });
   };
+  handleVerifyGuess = (character) => {
+    //call to backend with coordinates and character
+
+    const boardX = this.state.tag.coordinates[0];
+    const boardY = this.state.tag.coordinates[1];
+
+    //backend function
+    if (
+      !(
+        boardX >= this.characters[`${character}`].ratioX[0] &&
+        boardX <= this.characters[`${character}`].ratioX[1]
+      )
+    ) {
+      console.log('failed');
+      return false;
+    }
+    if (
+      !(
+        boardY >= this.characters[`${character}`].ratioY[0] &&
+        boardY <= this.characters[`${character}`].ratioY[1]
+      )
+    ) {
+      console.log('failed');
+      return false;
+    }
+    console.log('you found him!');
+    return true;
+  };
   render() {
     return (
       <Aux>
@@ -25,6 +64,7 @@ class Waldo extends Component {
           clicked={this.handleTag}
           coordinates={this.state.tag.coordinates}
           characters={this.state.characters}
+          verifyGuess={this.handleVerifyGuess}
         />
       </Aux>
     );

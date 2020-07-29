@@ -10,7 +10,11 @@ const gameboard = (props) => {
         src="https://www.wallpapertip.com/wmimgs/61-615302_waldo-walls-wherewaldocombo-breakerholy-shitthis-is-wheres-waldo.jpg"
         alt="Couldn't load"
       />
-      <Tag coordinates={props.coordinates} characters={props.characters} />
+      <Tag
+        verify={props.verifyGuess}
+        coordinates={props.coordinates}
+        characters={props.characters}
+      />
     </div>
   );
 };
