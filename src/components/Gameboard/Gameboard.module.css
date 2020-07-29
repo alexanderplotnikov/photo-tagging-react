@@ -1,10 +1,13 @@
 .Gameboard {
-  display: block;
   position: relative;
+  display: inline-block;
+
   /* overflow-x: scroll; */
   overflow: hidden;
 }
 .Gameboard img {
   display: block;
-  width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 50px);
+  object-fit: fill;
 }

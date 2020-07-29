@@ -10,7 +10,7 @@ class Waldo extends Component {
   };
   handleTag = (e) => {
     let bounds = e.target.getBoundingClientRect();
-    let x = e.clientX;
+    let x = e.clientX - bounds.left;
     let y = e.clientY - bounds.top;
     let ratioX = Math.round((x / e.target.offsetWidth) * 100);
     let ratioY = Math.round((y / e.target.offsetHeight) * 100);

@@ -18,8 +18,13 @@ const Tag = (props) => {
         <option value="default" disabled>
           character?
         </option>
-        <option value="waldo">Waldo</option>
-        <option value="waldo2">Waldo 2</option>
+        {props.characters.map((item, i) => {
+          return (
+            <option key={item + i} value={item.toLowerCase()}>
+              {item}
+            </option>
+          );
+        })}
       </select>
     </div>
   );
