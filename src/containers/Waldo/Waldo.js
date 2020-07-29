@@ -7,6 +7,7 @@ class Waldo extends Component {
       coordinates: [null, null],
     },
     characters: ['Waldo', 'Peter'],
+    showTag: false,
   };
   characters = {
     waldo: {
@@ -27,6 +28,7 @@ class Waldo extends Component {
     let ratioY = Math.round((y / e.target.offsetHeight) * 100);
     this.setState({
       tag: { coordinates: [ratioX, ratioY] },
+      showTag: true,
     });
   };
   handleVerifyGuess = (character) => {
@@ -40,12 +42,7 @@ class Waldo extends Component {
       !(
         boardX >= this.characters[`${character}`].ratioX[0] &&
         boardX <= this.characters[`${character}`].ratioX[1]
-      )
-    ) {
-      console.log('failed');
-      return false;
-    }
-    if (
+      ) &&
       !(
         boardY >= this.characters[`${character}`].ratioY[0] &&
         boardY <= this.characters[`${character}`].ratioY[1]
@@ -55,6 +52,7 @@ class Waldo extends Component {
       return false;
     }
     console.log('you found him!');
+    this.setState({ showTag: false });
     return true;
   };
   render() {
@@ -65,6 +63,7 @@ class Waldo extends Component {
           coordinates={this.state.tag.coordinates}
           characters={this.state.characters}
           verifyGuess={this.handleVerifyGuess}
+          showTag={this.state.showTag}
         />
       </Aux>
     );

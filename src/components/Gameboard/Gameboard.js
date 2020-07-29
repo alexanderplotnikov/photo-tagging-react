@@ -14,6 +14,7 @@ const gameboard = (props) => {
         verify={props.verifyGuess}
         coordinates={props.coordinates}
         characters={props.characters}
+        show={props.showTag}
       />
     </div>
   );

@@ -27,7 +27,7 @@ class Tag extends Component {
       borderColor: borderColor,
     };
 
-    return (
+    return this.props.show ? (
       <div className={classes.Tag} style={style}>
         <select value={this.state.value} onChange={(e) => this.handleSelect(e)}>
           <option value="default" disabled>
@@ -42,7 +42,7 @@ class Tag extends Component {
           })}
         </select>
       </div>
-    );
+    ) : null;
   }
 }
 
