@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
 import Gameboard from '../../components/Gameboard/Gameboard';
 import Aux from '../../hoc/aux/aux';
+
+import axios from '../../hoc/axios-orders';
+
 class Waldo extends Component {
   state = {
     tag: {
       coordinates: [null, null],
     },
-    characters: ['Waldo', 'Peter'],
+    remainingCharacters: ['Waldo', 'Peter'],
     showTag: false,
+    characters: null,
   };
-  characters = {
-    waldo: {
-      posX: 67.5,
-      posY: 76,
-      rangeX: [66, 69],
-      rangeY: [73, 83],
-    },
-    peter: {
-      posX: 0,
-      posY: 0,
-      rangeX: [0, 4],
-      rangeY: [0, 7],
-    },
-  };
+
+  componentDidMount() {
+    axios
+      .get('/characters.json')
+      .then((res) => {
+        console.log(res.data);
+        this.setState({ characters: res.data });
+      })
+      .catch((err) => console.log(err));
+  }
   foundCharacters = [];
   handleTag = (e) => {
     let bounds = e.target.getBoundingClientRect();
@@ -44,19 +44,19 @@ class Waldo extends Component {
     //backend function
     if (
       !(
-        boardX >= this.characters[`${character}`].rangeX[0] &&
-        boardX <= this.characters[`${character}`].rangeX[1]
+        boardX >= this.state.characters[`${character}`].rangeX[0] &&
+        boardX <= this.state.characters[`${character}`].rangeX[1]
       ) &&
       !(
-        boardY >= this.characters[`${character}`].rangeY[0] &&
-        boardY <= this.characters[`${character}`].rangeY[1]
+        boardY >= this.state.characters[`${character}`].rangeY[0] &&
+        boardY <= this.state.characters[`${character}`].rangeY[1]
       )
     ) {
       console.log('failed');
       return false;
     }
     console.log('you found him!');
-    const result = { ...this.characters[`${character}`] };
+    const result = { ...this.state.characters[`${character}`] };
     this.foundCharacters.push(result);
     console.log(this.foundCharacters);
     this.setState({ showTag: false });
@@ -68,7 +68,7 @@ class Waldo extends Component {
         <Gameboard
           clicked={this.handleTag}
           coordinates={this.state.tag.coordinates}
-          characters={this.state.characters}
+          remainingCharacters={this.state.remainingCharacters}
           verifyGuess={this.handleVerifyGuess}
           showTag={this.state.showTag}
           foundCharacters={this.foundCharacters}

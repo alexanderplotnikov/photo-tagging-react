@@ -13,7 +13,7 @@ const gameboard = (props) => {
       <Tag
         verify={props.verifyGuess}
         coordinates={props.coordinates}
-        characters={props.characters}
+        characters={props.remainingCharacters}
         show={props.showTag}
       />
       <FoundCharacters foundCharacters={props.foundCharacters} />
