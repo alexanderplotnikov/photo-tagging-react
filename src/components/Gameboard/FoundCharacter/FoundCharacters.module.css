@@ -1,0 +1,6 @@
+.FoundCharacters {
+  display: block;
+  position: absolute;
+  border: 4px dotted rgb(8, 4, 255);
+  box-sizing: border-box;
+}

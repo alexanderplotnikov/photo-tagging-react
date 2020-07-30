@@ -17,13 +17,13 @@ class Tag extends Component {
     }
   }
   render() {
-    const [ratioTop, ratioLeft] = this.props.coordinates;
+    const [ratioLeft, ratioTop] = this.props.coordinates;
     const borderColor = this.state.neutralState ? '#000' : '#f00';
     const style = {
       height: '14%',
       width: '5%',
-      top: `${ratioLeft - 7}%`,
-      left: `${ratioTop - 2.5}%`,
+      top: `${ratioTop - 7}%`,
+      left: `${ratioLeft - 2.5}%`,
       borderColor: borderColor,
     };
 

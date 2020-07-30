@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Gameboard.module.css';
 import Tag from '../../components/Gameboard/Tag/Tag';
-
+import FoundCharacters from './FoundCharacter/FoundCharacter';
 const gameboard = (props) => {
   return (
     <div className={classes.Gameboard}>
@@ -16,6 +16,7 @@ const gameboard = (props) => {
         characters={props.characters}
         show={props.showTag}
       />
+      <FoundCharacters foundCharacters={props.foundCharacters} />
     </div>
   );
 };

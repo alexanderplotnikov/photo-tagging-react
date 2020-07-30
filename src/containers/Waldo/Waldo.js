@@ -11,23 +11,27 @@ class Waldo extends Component {
   };
   characters = {
     waldo: {
-      ratioX: [66, 69],
-      ratioY: [73, 83],
+      posX: 67.5,
+      posY: 76,
+      rangeX: [66, 69],
+      rangeY: [73, 83],
     },
     peter: {
-      ratioX: [0, 4],
-      ratioY: [0, 7],
+      posX: 0,
+      posY: 0,
+      rangeX: [0, 4],
+      rangeY: [0, 7],
     },
   };
-
+  foundCharacters = [];
   handleTag = (e) => {
     let bounds = e.target.getBoundingClientRect();
     let x = e.clientX - bounds.left;
     let y = e.clientY - bounds.top;
-    let ratioX = Math.round((x / e.target.offsetWidth) * 100);
-    let ratioY = Math.round((y / e.target.offsetHeight) * 100);
+    let rangeX = Math.round((x / e.target.offsetWidth) * 100);
+    let rangeY = Math.round((y / e.target.offsetHeight) * 100);
     this.setState({
-      tag: { coordinates: [ratioX, ratioY] },
+      tag: { coordinates: [rangeX, rangeY] },
       showTag: true,
     });
   };
@@ -40,18 +44,21 @@ class Waldo extends Component {
     //backend function
     if (
       !(
-        boardX >= this.characters[`${character}`].ratioX[0] &&
-        boardX <= this.characters[`${character}`].ratioX[1]
+        boardX >= this.characters[`${character}`].rangeX[0] &&
+        boardX <= this.characters[`${character}`].rangeX[1]
       ) &&
       !(
-        boardY >= this.characters[`${character}`].ratioY[0] &&
-        boardY <= this.characters[`${character}`].ratioY[1]
+        boardY >= this.characters[`${character}`].rangeY[0] &&
+        boardY <= this.characters[`${character}`].rangeY[1]
       )
     ) {
       console.log('failed');
       return false;
     }
     console.log('you found him!');
+    const result = { ...this.characters[`${character}`] };
+    this.foundCharacters.push(result);
+    console.log(this.foundCharacters);
     this.setState({ showTag: false });
     return true;
   };
@@ -64,6 +71,7 @@ class Waldo extends Component {
           characters={this.state.characters}
           verifyGuess={this.handleVerifyGuess}
           showTag={this.state.showTag}
+          foundCharacters={this.foundCharacters}
         />
       </Aux>
     );
