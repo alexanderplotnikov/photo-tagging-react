@@ -9,17 +9,24 @@ class Waldo extends Component {
     tag: {
       coordinates: [null, null],
     },
-    remainingCharacters: ['Waldo', 'Peter'],
+    remainingCharacters: [null],
     showTag: false,
     characters: null,
+    gameOn: true,
+    loading: true,
   };
 
   componentDidMount() {
     axios
       .get('/characters.json')
       .then((res) => {
-        console.log(res.data);
-        this.setState({ characters: res.data });
+        const setupCharacters = Object.keys(res.data).map((key) => {
+          return key;
+        });
+        this.setState({
+          characters: res.data,
+          remainingCharacters: setupCharacters,
+        });
       })
       .catch((err) => console.log(err));
   }
@@ -52,19 +59,29 @@ class Waldo extends Component {
         boardY <= this.state.characters[`${character}`].rangeY[1]
       )
     ) {
-      console.log('failed');
       return false;
     }
-    console.log('you found him!');
+    const remainingCharacters = [...this.state.remainingCharacters];
+    const index = remainingCharacters.indexOf(character);
+    if (index > -1) {
+      remainingCharacters.splice(index, 1);
+    }
     const result = { ...this.state.characters[`${character}`] };
     this.foundCharacters.push(result);
-    console.log(this.foundCharacters);
-    this.setState({ showTag: false });
+    this.setState({ showTag: false, remainingCharacters });
+    this.checkGameState(remainingCharacters);
     return true;
+  };
+  checkGameState = (remainingCharacters) => {
+    if (remainingCharacters.length === 0) {
+      this.setState({ gameOn: false });
+    }
   };
   render() {
     return (
       <Aux>
+        {this.state.gameOn ? <p>Game ON</p> : <p>Game over</p>}
+
         <Gameboard
           clicked={this.handleTag}
           coordinates={this.state.tag.coordinates}
