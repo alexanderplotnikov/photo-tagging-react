@@ -18,6 +18,18 @@
   -o-animation: fadeIn ease 1s;
   -ms-animation: fadeIn ease 1s;
 }
+.Box::after {
+  -webkit-box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
+  box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
 @keyframes fadeIn {
   0% {
     opacity: 0;

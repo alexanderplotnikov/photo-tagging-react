@@ -11,13 +11,14 @@ const Gameboard = (props) => {
       style={props.loaded ? { display: 'inline-block' } : { display: 'block' }}
     >
       {props.loaded ? null : <Loader />}
-      <img
-        onClick={props.clicked}
-        src="https://www.wallpapertip.com/wmimgs/61-615302_waldo-walls-wherewaldocombo-breakerholy-shitthis-is-wheres-waldo.jpg"
-        alt="Couldn't load"
-        style={props.loaded ? {} : { display: 'none' }}
-        onLoad={() => props.onload()}
-      />
+      <div className={classes.Box} onClick={props.clicked}>
+        <img
+          src="https://www.wallpapertip.com/wmimgs/61-615302_waldo-walls-wherewaldocombo-breakerholy-shitthis-is-wheres-waldo.jpg"
+          alt="Couldn't load"
+          style={props.loaded ? {} : { display: 'none' }}
+          onLoad={() => props.onload()}
+        />
+      </div>
       <Tag
         verify={props.verifyGuess}
         coordinates={props.coordinates}
