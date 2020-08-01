@@ -1,10 +1,7 @@
 import React from 'react';
 import classes from './Leaderboard.module.css';
-
+import orderLeaderboardByTime from '../../helpers/order';
 const leaderboard = (props) => {
-  const orderLeaderboardByTime = (a, b) => {
-    return props.leaderboard[a].score > props.leaderboard[b].score;
-  };
   const leaderboard = Object.keys(props.leaderboard)
     .map((key) => {
       return key;
