@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classes from './Tag.module.css';
+import capitalize from '../../../helpers/capitalize';
 
 class Tag extends Component {
   state = {
@@ -36,7 +37,7 @@ class Tag extends Component {
           {this.props.characters.map((item, i) => {
             return (
               <option key={item + i} value={item.toLowerCase()}>
-                {item}
+                {capitalize(item)}
               </option>
             );
           })}

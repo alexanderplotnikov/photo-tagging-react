@@ -1,10 +1,16 @@
 import React from 'react';
 import classes from './Toolbar.module.css';
 
-const toolbar = (props) => (
-  <div className={classes.Toolbar}>
-    <h1>Where's Waldo</h1>
-  </div>
-);
+const toolbar = (props) => {
+  // const nickname = localStorage.getItem('nickname');
+  // const greeting = nickname ? <p>Welcome back, {nickname}!</p> : null;
+  const greeting = null;
+  return (
+    <div className={classes.Toolbar}>
+      <h1>Where's Waldo</h1>
+      {greeting}
+    </div>
+  );
+};
 
 export default toolbar;
