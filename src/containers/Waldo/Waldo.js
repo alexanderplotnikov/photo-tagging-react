@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Gameboard from '../../components/Gameboard/Gameboard';
 import Aux from '../../hoc/aux/aux';
-
+import Modal from '../../components/UI/Modal/Modal';
 import axios from '../../hoc/axios-orders';
 
 class Waldo extends Component {
@@ -13,9 +13,10 @@ class Waldo extends Component {
     showTag: false,
     characters: null,
     gameOn: true,
-    loading: true,
+    loaded: false,
+    timeStart: null,
+    timeStop: null,
   };
-
   componentDidMount() {
     axios
       .get('/characters.json')
@@ -29,6 +30,8 @@ class Waldo extends Component {
         });
       })
       .catch((err) => console.log(err));
+    var deviceID = MediaDeviceInfo;
+    console.log(deviceID);
   }
   foundCharacters = [];
   handleTag = (e) => {
@@ -47,17 +50,10 @@ class Waldo extends Component {
 
     const boardX = this.state.tag.coordinates[0];
     const boardY = this.state.tag.coordinates[1];
-
-    //backend function
+    const target = this.state.characters[`${character}`];
     if (
-      !(
-        boardX >= this.state.characters[`${character}`].rangeX[0] &&
-        boardX <= this.state.characters[`${character}`].rangeX[1]
-      ) &&
-      !(
-        boardY >= this.state.characters[`${character}`].rangeY[0] &&
-        boardY <= this.state.characters[`${character}`].rangeY[1]
-      )
+      !(boardX >= target.rangeX[0] && boardX <= target.rangeX[1]) ||
+      !(boardY >= target.rangeY[0] && boardY <= target.rangeY[1])
     ) {
       return false;
     }
@@ -74,13 +70,21 @@ class Waldo extends Component {
   };
   checkGameState = (remainingCharacters) => {
     if (remainingCharacters.length === 0) {
-      this.setState({ gameOn: false });
+      const timeStop = Date.now();
+      this.setState({ gameOn: false, timeStop });
     }
+  };
+  handleOnLoad = () => {
+    const timeStart = Date.now();
+    this.setState({ loaded: true, timeStart });
   };
   render() {
     return (
       <Aux>
-        {this.state.gameOn ? <p>Game ON</p> : <p>Game over</p>}
+        <Modal show={!this.state.gameOn}>
+          Congratulations!
+          <button>New Game</button>
+        </Modal>
 
         <Gameboard
           clicked={this.handleTag}
@@ -89,6 +93,8 @@ class Waldo extends Component {
           verifyGuess={this.handleVerifyGuess}
           showTag={this.state.showTag}
           foundCharacters={this.foundCharacters}
+          loaded={this.state.loaded}
+          onload={this.handleOnLoad}
         />
       </Aux>
     );
