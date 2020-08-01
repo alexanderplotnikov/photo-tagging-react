@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import Gameboard from '../../components/Gameboard/Gameboard';
 import Aux from '../../hoc/aux/aux';
 import Modal from '../../components/UI/Modal/Modal';
+import Leaderboard from '../../components/Leaderboard/Leaderboard';
+import Button from '../../components/UI/Button/Button';
+import capitalize from '../../helpers/capitalize';
 import axios from '../../hoc/axios-orders';
-
+import convertTime from '../../helpers/convertTime';
 class Waldo extends Component {
   state = {
     tag: {
@@ -15,7 +18,12 @@ class Waldo extends Component {
     gameOn: true,
     loaded: false,
     timeStart: null,
-    timeStop: null,
+    formattedTime: null,
+    tolalTimeInMs: null,
+    nickname: null,
+    leaderboard: [],
+    showLeaderboard: false,
+    inLeaderboard: false,
   };
   componentDidMount() {
     axios
@@ -30,8 +38,10 @@ class Waldo extends Component {
         });
       })
       .catch((err) => console.log(err));
-    var deviceID = MediaDeviceInfo;
-    console.log(deviceID);
+    const inLeaderboard = localStorage.getItem('inLeaderboard') === 'true';
+    const nickname = capitalize(localStorage.getItem('nickname'));
+
+    this.setState({ inLeaderboard, nickname });
   }
   foundCharacters = [];
   handleTag = (e) => {
@@ -44,6 +54,7 @@ class Waldo extends Component {
       tag: { coordinates: [rangeX, rangeY] },
       showTag: true,
     });
+    e.stopPropagation();
   };
   handleVerifyGuess = (character) => {
     //call to backend with coordinates and character
@@ -71,21 +82,81 @@ class Waldo extends Component {
   checkGameState = (remainingCharacters) => {
     if (remainingCharacters.length === 0) {
       const timeStop = Date.now();
-      this.setState({ gameOn: false, timeStop });
+      const timeInMs = timeStop - this.state.timeStart;
+      const convertedTime = convertTime(timeInMs);
+      this.setState({ gameOn: false, formattedTime: convertedTime, timeInMs });
     }
   };
   handleOnLoad = () => {
     const timeStart = Date.now();
     this.setState({ loaded: true, timeStart });
   };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // this.setState({ gameOn: true });
+    axios
+      .post('/leaderboard.json', {
+        nickname: this.state.nickname,
+        formattedScore: this.state.formattedTime,
+        score: this.state.timeInMs,
+      })
+      .then((_) => {
+        this.getLeaderboard();
+      });
+    localStorage.setItem('inLeaderboard', true);
+    localStorage.setItem('nickname', this.state.nickname);
+  };
+  getLeaderboard = () => {
+    this.setState({ showLeaderboard: true });
+    axios
+      .get('/leaderboard.json')
+      .then((res) => {
+        this.setState({ leaderboard: res.data });
+      })
+      .catch((err) => console.log(err));
+  };
+  handleInput = (e) => {
+    this.setState({ nickname: e.target.value });
+  };
   render() {
+    const firstTimeUser = (
+      <form onSubmit={(e) => this.handleSubmit(e)}>
+        <label htmlFor="username">Enter your nickname</label>
+        <input
+          id="username"
+          required
+          onChange={(e) => this.handleInput(e)}
+          value={this.state.nickname}
+        ></input>
+        <Button>Done!</Button>
+      </form>
+    );
+    const returnUser = (
+      <Aux>
+        <div>
+          {this.state.nickname}, you have already solved this mystery before. I
+          cannot let you get into Leaderboard again. You are welcome to glance
+          at it once more.
+        </div>
+        <Button clicked={this.getLeaderboard}>View Leaderboard</Button>
+      </Aux>
+    );
+    const prompt = (
+      <Aux>
+        <h2>Congratulations!</h2>
+        <p>You finished it in {this.state.formattedTime}</p>
+        {this.state.inLeaderboard ? returnUser : firstTimeUser}
+      </Aux>
+    );
+    let leaderboard = null;
+    if (this.state.leaderboard) {
+      leaderboard = <Leaderboard leaderboard={this.state.leaderboard} />;
+    }
     return (
       <Aux>
         <Modal show={!this.state.gameOn}>
-          Congratulations!
-          <button>New Game</button>
+          {this.state.showLeaderboard ? leaderboard : prompt}
         </Modal>
-
         <Gameboard
           clicked={this.handleTag}
           coordinates={this.state.tag.coordinates}
