@@ -1,10 +1,14 @@
 .Modal {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
   position: fixed;
   z-index: 500;
-  background-color: white;
+  background-color: rgb(36, 129, 145);
   width: 40%;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px black;
+  border: 20px solid rgb(0, 104, 104);
+  border-radius: 7px;
+  box-shadow: 0 3px 10px rgb(17, 17, 17);
   padding: 16px;
   left: 30%;
   top: 30%;
@@ -15,23 +19,38 @@
   -o-transition: all 500ms cubic-bezier(0, 1.65, 1, 0.84);
   transition: all 500ms cubic-bezier(0, 1.65, 1, 0.84); /* custom */
 }
-
-/* @media (min-width: 600px) {
-  .Modal {
-    width: 500px;
-    left: calc(50% - 250px);
-  }
-} */
-/* 
-@keyframes scaleUp {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-} */
+.Modal > * {
+  display: block;
+  margin: 1em;
+  color: white;
+}
+.Modal button {
+  width: 50%;
+}
+.Modal h2 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+.Modal p {
+  font-size: 1.5em;
+}
+.Modal form {
+  display: grid;
+  justify-items: center;
+  margin: 2em;
+  font-size: 1.1em;
+}
+.Modal input {
+  background-color: transparent;
+  color: inherit;
+  outline: none;
+  border: none;
+  line-height: 1.5em;
+  border-bottom: 1px solid rgb(255, 165, 0);
+  margin: 1em 0;
+  text-align: center;
+}
+.Modal div {
+  font-size: 1.1em;
+  line-height: 1.4em;
+}

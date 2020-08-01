@@ -5,7 +5,9 @@ import Toolbar from '../../components/Toolbar/Toolbar';
 const layout = (props) => (
   <Aux>
     <Toolbar />
-    <main>{props.children}</main>
+    <main style={{ height: '100vh', backgroundColor: 'rgb(0, 104, 104)' }}>
+      {props.children}
+    </main>
   </Aux>
 );
 

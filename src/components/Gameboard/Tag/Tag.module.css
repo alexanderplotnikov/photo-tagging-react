@@ -2,6 +2,7 @@
   position: absolute;
   border: 3px solid rgb(0, 0, 0);
   box-sizing: border-box;
+  z-index: 1000;
 }
 .Tag select {
   position: absolute;
