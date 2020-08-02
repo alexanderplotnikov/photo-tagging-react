@@ -9,7 +9,6 @@ const foundCharacter = (props) => {
       top: `calc(${character.posY}% - 4vh)`,
       left: `calc(${character.posX}% - 4vh)`,
     };
-    console.log(style);
     return (
       <div
         key={character.posX + character.posY}
@@ -18,7 +17,6 @@ const foundCharacter = (props) => {
       ></div>
     );
   });
-
   return <Aux>{characters}</Aux>;
 };
 

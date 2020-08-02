@@ -1,24 +1,9 @@
 .Gameboard {
   position: relative;
-  /* overflow-x: scroll; */
   margin: 0 auto;
   overflow: hidden;
 }
-.Gameboard img {
-  display: block;
-  max-width: 100%;
-  max-height: calc(100vh - 50px);
-  object-fit: fill;
-}
-
-.Gameboard img {
-  animation: fadeIn ease 1s;
-  -webkit-animation: fadeIn ease 1s;
-  -moz-animation: fadeIn ease 1s;
-  -o-animation: fadeIn ease 1s;
-  -ms-animation: fadeIn ease 1s;
-}
-.Box::after {
+.Gameboard .Box::after {
   -webkit-box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
   box-shadow: inset 0px 0px 12px 1px rgba(0, 0, 0, 0.75);
@@ -30,6 +15,18 @@
   width: 100%;
   z-index: 1;
 }
+.Gameboard img {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100vh - 50px);
+  object-fit: fill;
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -38,7 +35,6 @@
     opacity: 1;
   }
 }
-
 @-moz-keyframes fadeIn {
   0% {
     opacity: 0;
@@ -47,7 +43,6 @@
     opacity: 1;
   }
 }
-
 @-webkit-keyframes fadeIn {
   0% {
     opacity: 0;
@@ -56,7 +51,6 @@
     opacity: 1;
   }
 }
-
 @-o-keyframes fadeIn {
   0% {
     opacity: 0;
@@ -65,7 +59,6 @@
     opacity: 1;
   }
 }
-
 @-ms-keyframes fadeIn {
   0% {
     opacity: 0;

@@ -14,7 +14,6 @@ class Tag extends Component {
   componentDidUpdate(prevProps) {
     if (this.props.coordinates !== prevProps.coordinates) {
       this.setState({ neutralState: true });
-      console.log('[Tag.js] componentDidUpdate');
     }
   }
   render() {

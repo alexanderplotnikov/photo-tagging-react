@@ -1,11 +1,12 @@
 .Leaderboard {
   display: grid;
-  overflow-y: scroll;
   max-height: 300px;
+  overflow-y: scroll;
   width: 100%;
 }
 .Leaderboard h2 {
   font-size: 1.5em;
+  margin-bottom: 0.5em;
 }
 .Leaderboard tr {
   border-bottom: 1px solid rgb(40, 235, 241);
