@@ -1,0 +1,62 @@
+.Prompt {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+}
+.Prompt > * {
+  display: block;
+  margin: 1em;
+}
+
+.Prompt h2 {
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+.Prompt p {
+  font-size: 1.5em;
+}
+.Prompt > div {
+  max-width: 450px;
+  font-size: 1.1em;
+  line-height: 1.75em;
+  padding: 0.75em;
+  border: 1px dashed #fff;
+  box-sizing: border-box;
+}
+.Prompt form {
+  display: grid;
+  justify-items: center;
+  margin: 2em;
+  font-size: 1.1em;
+}
+.Prompt form > div {
+  display: grid;
+  position: relative;
+  justify-items: center;
+}
+.Prompt label {
+  position: absolute;
+  color: #ccc;
+  font-size: 0.8em;
+  transform: translateX(-45px) translateY(18px);
+  transition: 0.3s all ease;
+}
+.Prompt input {
+  background-color: transparent;
+  color: rgb(255, 165, 0);
+  outline: none;
+  border: none;
+  line-height: 1.5em;
+  border-bottom: 1px solid rgb(255, 165, 0);
+  box-sizing: border-box;
+  margin: 1em 0;
+  text-align: center;
+}
+.Prompt input:invalid {
+  box-shadow: none;
+}
+input:focus + label {
+  transform: translateX(0) translateY(-12px);
+  font-size: 1em;
+  color: rgb(255, 165, 0);
+}

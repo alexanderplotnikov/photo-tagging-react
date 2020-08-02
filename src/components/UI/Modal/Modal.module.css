@@ -1,8 +1,6 @@
 .Modal {
-  display: flex;
-  flex-direction: column;
-  place-items: center;
   position: fixed;
+  color: white;
   z-index: 500;
   background-color: rgb(36, 129, 145);
   width: 40%;
@@ -11,7 +9,7 @@
   box-shadow: 0 3px 10px rgb(17, 17, 17);
   padding: 16px;
   left: 30%;
-  top: 30%;
+  top: 17%;
   box-sizing: border-box;
   -webkit-transition: all 500ms cubic-bezier(0, 1, 1, 0.84); /* older webkit */
   -webkit-transition: all 500ms cubic-bezier(0, 1.65, 1, 0.84);
@@ -19,38 +17,16 @@
   -o-transition: all 500ms cubic-bezier(0, 1.65, 1, 0.84);
   transition: all 500ms cubic-bezier(0, 1.65, 1, 0.84); /* custom */
 }
-.Modal > * {
-  display: block;
-  margin: 1em;
-  color: white;
+
+@media (max-width: 768px) {
+  .Modal {
+    min-width: 90%;
+    left: 5%;
+  }
 }
-.Modal button {
-  width: 50%;
-}
-.Modal h2 {
-  font-size: 2em;
-  margin-bottom: 0.5em;
-}
-.Modal p {
-  font-size: 1.5em;
-}
-.Modal form {
-  display: grid;
-  justify-items: center;
-  margin: 2em;
-  font-size: 1.1em;
-}
-.Modal input {
-  background-color: transparent;
-  color: inherit;
-  outline: none;
-  border: none;
-  line-height: 1.5em;
-  border-bottom: 1px solid rgb(255, 165, 0);
-  margin: 1em 0;
-  text-align: center;
-}
-.Modal div {
-  font-size: 1.1em;
-  line-height: 1.4em;
+@media (min-width: 769px) and (max-width: 1040px) {
+  .Modal {
+    min-width: 60%;
+    left: 20%;
+  }
 }

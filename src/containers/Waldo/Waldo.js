@@ -3,10 +3,11 @@ import Gameboard from '../../components/Gameboard/Gameboard';
 import Aux from '../../hoc/aux/aux';
 import Modal from '../../components/UI/Modal/Modal';
 import Leaderboard from '../../components/Leaderboard/Leaderboard';
-import Button from '../../components/UI/Button/Button';
+import Prompt from '../../components/Prompt/Prompt';
 import capitalize from '../../helpers/capitalize';
 import axios from '../../hoc/axios-orders';
 import convertTime from '../../helpers/convertTime';
+
 class Waldo extends Component {
   state = {
     tag: {
@@ -24,6 +25,7 @@ class Waldo extends Component {
     leaderboard: [],
     showLeaderboard: false,
     inLeaderboard: false,
+    foundCharacters: [],
   };
   componentDidMount() {
     axios
@@ -43,7 +45,6 @@ class Waldo extends Component {
 
     this.setState({ inLeaderboard, nickname });
   }
-  foundCharacters = [];
   handleTag = (e) => {
     let bounds = e.target.getBoundingClientRect();
     let x = e.clientX - bounds.left;
@@ -54,11 +55,8 @@ class Waldo extends Component {
       tag: { coordinates: [rangeX, rangeY] },
       showTag: true,
     });
-    e.stopPropagation();
   };
   handleVerifyGuess = (character) => {
-    //call to backend with coordinates and character
-
     const boardX = this.state.tag.coordinates[0];
     const boardY = this.state.tag.coordinates[1];
     const target = this.state.characters[`${character}`];
@@ -74,7 +72,7 @@ class Waldo extends Component {
       remainingCharacters.splice(index, 1);
     }
     const result = { ...this.state.characters[`${character}`] };
-    this.foundCharacters.push(result);
+    this.state.foundCharacters.push(result);
     this.setState({ showTag: false, remainingCharacters });
     this.checkGameState(remainingCharacters);
     return true;
@@ -93,7 +91,6 @@ class Waldo extends Component {
   };
   handleSubmit = (e) => {
     e.preventDefault();
-    // this.setState({ gameOn: true });
     axios
       .post('/leaderboard.json', {
         nickname: this.state.nickname,
@@ -119,34 +116,15 @@ class Waldo extends Component {
     this.setState({ nickname: e.target.value });
   };
   render() {
-    const firstTimeUser = (
-      <form onSubmit={(e) => this.handleSubmit(e)}>
-        <label htmlFor="username">Enter your nickname</label>
-        <input
-          id="username"
-          required
-          onChange={(e) => this.handleInput(e)}
-          value={this.state.nickname}
-        ></input>
-        <Button>Done!</Button>
-      </form>
-    );
-    const returnUser = (
-      <Aux>
-        <div>
-          {this.state.nickname}, you have already solved this mystery before. I
-          cannot let you get into Leaderboard again. You are welcome to glance
-          at it once more.
-        </div>
-        <Button clicked={this.getLeaderboard}>View Leaderboard</Button>
-      </Aux>
-    );
     const prompt = (
-      <Aux>
-        <h2>Congratulations!</h2>
-        <p>You finished it in {this.state.formattedTime}</p>
-        {this.state.inLeaderboard ? returnUser : firstTimeUser}
-      </Aux>
+      <Prompt
+        formattedTime={this.state.formattedTime}
+        inLeaderboard={this.state.inLeaderboard}
+        nickname={this.state.nickname}
+        submitted={this.handleSubmit}
+        changed={this.handleInput}
+        getLeaderboard={this.getLeaderboard}
+      />
     );
     let leaderboard = null;
     if (this.state.leaderboard) {
@@ -163,7 +141,7 @@ class Waldo extends Component {
           remainingCharacters={this.state.remainingCharacters}
           verifyGuess={this.handleVerifyGuess}
           showTag={this.state.showTag}
-          foundCharacters={this.foundCharacters}
+          foundCharacters={this.state.foundCharacters}
           loaded={this.state.loaded}
           onload={this.handleOnLoad}
         />
