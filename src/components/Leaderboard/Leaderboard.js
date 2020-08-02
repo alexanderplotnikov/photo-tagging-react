@@ -5,23 +5,27 @@ const leaderboard = (props) => {
     .map((key) => {
       return key;
     })
-    .sort((a, b) => props.leaderboard[a].score > props.leaderboard[b].score)
+    .sort((a, b) => props.leaderboard[a].score - props.leaderboard[b].score)
     .map((key, index) => (
-      <tr>
-        <td>{index + 1}</td>
-        <td>{props.leaderboard[key].nickname}</td>
-        <td>{props.leaderboard[key].formattedScore}</td>
-      </tr>
+      <tbody key={key + index}>
+        <tr>
+          <td>{index + 1}</td>
+          <td>{props.leaderboard[key].nickname}</td>
+          <td>{props.leaderboard[key].formattedScore}</td>
+        </tr>
+      </tbody>
     ));
   return (
     <div className={classes.Leaderboard}>
       <h2>Leaderboard</h2>
       <table>
-        <tr>
-          <td></td>
-          <td></td>
-          <td>Time</td>
-        </tr>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td>Time</td>
+          </tr>
+        </tbody>
         {leaderboard}
       </table>
     </div>

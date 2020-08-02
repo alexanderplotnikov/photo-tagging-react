@@ -21,7 +21,7 @@ class Waldo extends Component {
     timeStart: null,
     formattedTime: null,
     tolalTimeInMs: null,
-    nickname: null,
+    nickname: '',
     leaderboard: [],
     showLeaderboard: false,
     inLeaderboard: false,
